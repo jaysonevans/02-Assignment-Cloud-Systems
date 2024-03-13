@@ -8,13 +8,13 @@ resource "aws_vpc" "VPC-MARK-I" {
 
 # Create the Internet Gateway
 resource "aws_internet_gateway" "GATEWAY-MARK-I" {
-  vpc_id = aws_vpc.vpc-tf.id
+  vpc_id = aws_vpc.VPC-MARK-I.id
   tags   = { Name = "GATEWAY-MARK-I" }
 }
 
 # Create a public subnet using 192.168.0.0/18
 resource "aws_subnet" "SUBNET-MARK-I" {
-  vpc_id                  = aws_vpc.vpc-tf.id
+  vpc_id                  = aws_vpc.VPC-MARK-I.id
   cidr_block              = "192.168.0.0/18"
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
@@ -23,7 +23,7 @@ resource "aws_subnet" "SUBNET-MARK-I" {
 
 # Create a public subnet using 192.168.64.0/18
 resource "aws_subnet" "SUBNET-MARK-II" {
-  vpc_id                  = aws_vpc.vpc-tf.id
+  vpc_id                  = aws_vpc.VPC-MARK-I.id
   cidr_block              = "192.168.64.0/18"
   availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
@@ -32,7 +32,7 @@ resource "aws_subnet" "SUBNET-MARK-II" {
 
 # Create a public subnet using 192.168.128.0/18
 resource "aws_subnet" "SUBNET-MARK-III" {
-  vpc_id                  = aws_vpc.vpc-tf.id
+  vpc_id                  = aws_vpc.VPC-MARK-I.id
   cidr_block              = "192.168.128.0/18"
   availability_zone       = "us-east-1c"
   map_public_ip_on_launch = true
@@ -41,7 +41,7 @@ resource "aws_subnet" "SUBNET-MARK-III" {
 
 # Create a public subnet using 192.168.192.0/18
 resource "aws_subnet" "SUBNET-MARK-IV" {
-  vpc_id                  = aws_vpc.vpc-tf.id
+  vpc_id                  = aws_vpc.VPC-MARK-I.id
   cidr_block              = "192.168.192.0/18"
   availability_zone       = "us-east-1d"
   map_public_ip_on_launch = true
@@ -50,11 +50,11 @@ resource "aws_subnet" "SUBNET-MARK-IV" {
 
 # Create the public table
 resource "aws_route_table" "PUBLIC-RT-MARK-I" {
-  vpc_id = aws_vpc.VPC-MARK-I
+  vpc_id = aws_vpc.VPC-MARK-I.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.GATEWAY-MARK-I
+    gateway_id = aws_internet_gateway.GATEWAY-MARK-I.id
   }
 
   tags = { Name = "PUBLIC-RT-MARK-I" }
@@ -91,10 +91,10 @@ data "aws_subnets" "ALL-SUBNETS" {
 
 # Output the list of subnets in the VPC
 output "ALL-SUBNET-IDS" {
-  value = tolist(data.aws_subnets.ALL-SUBNETS-IDS-DATA.ids)
+  value = tolist(data.aws_subnets.ALL-SUBNETS.ids)
 }
 
-# Output the VPC
+# Output the VPCterr
 output "VPC-MARK-I" {
   value = aws_vpc.VPC-MARK-I
 }
