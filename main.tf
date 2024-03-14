@@ -17,5 +17,7 @@ module "security-group" {
 
 module "ec2" {
   source      = "./ec2"
+  subnets     = module.vpc.subnets-in-vpc-ids
+  counter     = 4
   secgrp-name = module.security-group.SECGRP-MARK-I.name
 }
