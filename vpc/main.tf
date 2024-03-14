@@ -12,40 +12,14 @@ resource "aws_internet_gateway" "GATEWAY-MARK-I" {
   tags   = { Name = "GATEWAY-MARK-I" }
 }
 
-# Create a public subnet using 192.168.0.0/18
-resource "aws_subnet" "SUBNET-MARK-I" {
+# Create subnets
+resource "aws_subnet" "SUBNETS" {
   vpc_id                  = aws_vpc.VPC-MARK-I.id
-  cidr_block              = "192.168.0.0/18"
-  availability_zone       = "us-east-1a"
+  count = var.counter
+  cidr_block              = var.cidrs[count.index]
+  availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = true
-  tags                    = { Name = "SUBNET-MARK-I" }
-}
-
-# Create a public subnet using 192.168.64.0/18
-resource "aws_subnet" "SUBNET-MARK-II" {
-  vpc_id                  = aws_vpc.VPC-MARK-I.id
-  cidr_block              = "192.168.64.0/18"
-  availability_zone       = "us-east-1b"
-  map_public_ip_on_launch = true
-  tags                    = { Name = "SUBNET-MARK-II" }
-}
-
-# Create a public subnet using 192.168.128.0/18
-resource "aws_subnet" "SUBNET-MARK-III" {
-  vpc_id                  = aws_vpc.VPC-MARK-I.id
-  cidr_block              = "192.168.128.0/18"
-  availability_zone       = "us-east-1c"
-  map_public_ip_on_launch = true
-  tags                    = { Name = "SUBNET-MARK-III" }
-}
-
-# Create a public subnet using 192.168.192.0/18
-resource "aws_subnet" "SUBNET-MARK-IV" {
-  vpc_id                  = aws_vpc.VPC-MARK-I.id
-  cidr_block              = "192.168.192.0/18"
-  availability_zone       = "us-east-1d"
-  map_public_ip_on_launch = true
-  tags                    = { Name = "SUBNET-MARK-IV" }
+  tags                    = { Name = "SN-0${count.index + 1}" }
 }
 
 # Create the public table
@@ -60,25 +34,11 @@ resource "aws_route_table" "PUBLIC-RT-MARK-I" {
   tags = { Name = "PUBLIC-RT-MARK-I" }
 }
 
-# Associate the route tables with the subnet one
+# Associate the route tables with the subnets
 resource "aws_route_table_association" "ASSOCIATION-MARK-I" {
   route_table_id = aws_route_table.PUBLIC-RT-MARK-I.id
-  subnet_id = aws_subnet.SUBNET-MARK-I.id
-}
-
-resource "aws_route_table_association" "ASSOCIATION-MARK-II" {
-  route_table_id = aws_route_table.PUBLIC-RT-MARK-I.id
-  subnet_id = aws_subnet.SUBNET-MARK-II.id
-}
-
-resource "aws_route_table_association" "ASSOCIATION-MARK-III" {
-  route_table_id = aws_route_table.PUBLIC-RT-MARK-I.id
-  subnet_id = aws_subnet.SUBNET-MARK-III.id
-}
-
-resource "aws_route_table_association" "ASSOCIATION-MARK-IV" {
-  route_table_id = aws_route_table.PUBLIC-RT-MARK-I.id
-  subnet_id = aws_subnet.SUBNET-MARK-IV.id
+  count = var.counter
+  subnet_id = aws_subnet.SUBNETS.*.id[count.index]
 }
 
 # Filter for all subnets in the VPC
