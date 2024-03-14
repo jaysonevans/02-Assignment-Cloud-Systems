@@ -1,25 +1,25 @@
 # Create a variable for the chassis
 variable "chassis" {
-    type = string
-    default = "t2.micro"
+  type    = string
+  default = "t2.micro"
 }
 
 variable "counter" {
-    type = number
+  type = number
 }
 
 variable "vpc-id" {
-    type = string
+  type = string
 }
 
 variable "subnet-ids" {
-    type = list
+  type = list(any)
 }
 
 # Bootstrap information
 variable "apache-bootstrap" {
-    type = string
-    default = <<-EOF
+  type    = string
+  default = <<-EOF
         #!/bin/bash
         yum update -y
         yum install httpd -y

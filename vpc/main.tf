@@ -15,7 +15,7 @@ resource "aws_internet_gateway" "internet-gateway" {
 # Create subnets
 resource "aws_subnet" "subnets" {
   vpc_id                  = aws_vpc.vpc.id
-  count = var.counter
+  count                   = var.counter
   cidr_block              = var.cidrs[count.index]
   availability_zone       = var.azs[count.index]
   map_public_ip_on_launch = true
@@ -37,8 +37,8 @@ resource "aws_route_table" "route-table" {
 # Associate the route tables with the subnets
 resource "aws_route_table_association" "route-table-association" {
   route_table_id = aws_route_table.route-table.id
-  count = var.counter
-  subnet_id = aws_subnet.subnets.*.id[count.index]
+  count          = var.counter
+  subnet_id      = aws_subnet.subnets.*.id[count.index]
 }
 
 output "subnet-ids" {

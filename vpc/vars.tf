@@ -1,11 +1,11 @@
 variable "cidrs" {
-    type = list
+  type = list(any)
 }
 
 variable "azs" {
-    type = list
+  type = list(any)
 }
 
 variable "counter" {
-    type = number
+  type = number
 }
