@@ -1,9 +1,9 @@
 # Create the security group
-resource "aws_security_group" "SECGRP-MARK-I" {
-    name = "SECGRP-MARK-I"
+resource "aws_security_group" "secgrp-mark-i" {
+    name = "secgrp-mark-i"
     description = "Security group created for the Cloud Systems assignment 02."
     vpc_id = var.vpc_id
-    tags = { Name = "SECGRP-MARK-I"}
+    tags = { Name = "secgrp-mark-i"}
     
     # Allow SSH
     ingress {
@@ -38,6 +38,6 @@ resource "aws_security_group" "SECGRP-MARK-I" {
     }
 }
 
-output "SECGRP-MARK-I" {
-    value = aws_security_group.SECGRP-MARK-I
+output "secgrp-mark-i" {
+    value = aws_security_group.secgrp-mark-i
 }

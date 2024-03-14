@@ -41,17 +41,8 @@ resource "aws_route_table_association" "ASSOCIATION-MARK-I" {
   subnet_id = aws_subnet.SUBNETS.*.id[count.index]
 }
 
-# Filter for all subnets in the VPC
-data "aws_subnets" "subnets-in-vpc" {
-  filter {
-    name = "VPC-MARK-I"
-    values = [aws_vpc.VPC-MARK-I.id]
-  }
-}
-
-# Output the list of subnets in the VPC
-output "subnets-in-vpc-ids" {
-  value = tolist(data.aws_subnets.subnets-in-vpc.ids)
+output "subnet-ids" {
+  value = tolist(aws_subnet.SUBNETS.*.id)
 }
 
 # Output the VPC

@@ -4,12 +4,16 @@ variable "chassis" {
     default = "t2.micro"
 }
 
-variable "subnets" {
-    type = list
-}
-
 variable "counter" {
     type = number
+}
+
+variable "vpc-id" {
+    type = string
+}
+
+variable "subnet-ids" {
+    type = list
 }
 
 # Bootstrap information
@@ -27,4 +31,4 @@ variable "apache-bootstrap" {
 }
 
 # Create a placeholder variable for the security group ID
-variable "secgrp-name" {}
+variable "secgrp-id" {}
