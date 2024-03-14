@@ -8,17 +8,6 @@ data "aws_ami" "most-recent-amazon-linux" {
     }
 }
 
-/* data "aws_subnets" "subnets" {
-    filter {
-      name = "vpc-id"
-      values = [var.vpc-id]
-    }
-}
-
-output "mysubnets" {
-  value = tolist(data.aws_subnets.subnets.ids)
-} */
-
 # Create EC2
 resource "aws_instance" "ec2" {
     ami = data.aws_ami.most-recent-amazon-linux.id
