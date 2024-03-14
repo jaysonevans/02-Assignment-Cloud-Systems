@@ -10,7 +10,7 @@ resource "aws_security_group" "secgrp-mark-i" {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks = [ "142.55.0.0/16", "24.150.73.107" ]
+        cidr_blocks = [ "142.55.0.0/16", "24.150.73.107/32" ]
     }
 
     # Allow HTTP
@@ -18,7 +18,7 @@ resource "aws_security_group" "secgrp-mark-i" {
         from_port = 80
         to_port = 80
         protocol = "tcp"
-        cidr_blocks = [ "142.55.0.0/16", "24.150.73.107" ]
+        cidr_blocks = [ "142.55.0.0/16", "24.150.73.107/32" ]
     }
     
     # Allow 8080 (Docker container I)

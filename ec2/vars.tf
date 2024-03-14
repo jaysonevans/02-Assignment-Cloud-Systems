@@ -27,6 +27,12 @@ variable "apache-bootstrap" {
         echo "<html><body><h1> Jayson Evans $(hostname -f) </h1></body></html>" > index.html
         systemctl restart httpd
         systemctl enable httpd
+        yum install docker -y
+        systemctl restart docker
+        systemctl enable docker
+        docker pull nginx
+        docker run -it --rm -d -p 8080:80 --name web1 nginx
+        docker run -it --rm -d -p 8081:80 --name web2 nginx
         EOF
 }
 
