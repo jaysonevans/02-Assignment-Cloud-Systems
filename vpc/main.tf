@@ -49,3 +49,18 @@ output "subnet-ids" {
 output "vpc" {
   value = aws_vpc.vpc
 }
+
+# Output the Internet gateway
+output "internet-gateway" {
+  value = aws_internet_gateway.internet-gateway
+}
+
+# Output the route table
+output "route-table" {
+  value = aws_route_table.route-table
+}
+
+# Output the route table association
+output "route-table-association" {
+  value = aws_route_table_association.route-table-association
+}
